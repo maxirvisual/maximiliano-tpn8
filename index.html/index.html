@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mini-web semántico — Biblioteca</title>
+  <style>
+    /* Reset básico y box-sizing global */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+    body { background: #f5f7fb; color: #222; line-height: 1.4; }
+
+    /* Layout */
+    header { background: #0b71eb; color: white; padding: 1rem; }
+    nav { display:flex; gap:1rem; align-items:center; }
+    nav a { color: rgba(255,255,255,0.9); text-decoration:none; font-weight:600; }
+    main { max-width: 1000px; margin: 1.25rem auto; padding: 0 1rem; }
+
+    /* Uso de id para elemento único (título principal) */
+    #main-title { font-size: 1.4rem; }
+
+    /* Tarjetas reutilizables (componentes visuales) */
+    .grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap:1rem; }
+    .card { background: white; border-radius: 12px; padding: 1rem; box-shadow: 0 6px 18px rgba(13,28,56,0.08); border: 1px solid rgba(13,28,56,0.04); }
+    .card .title { display:block; font-weight:700; margin-bottom:0.5rem; }
+    .card .meta { font-size:0.85rem; color:#556; margin-bottom:0.5rem; }
+    .card p { font-size:0.95rem; }
+
+    /* Diferencias por especificidad: regla general .card .title vs regla específica para un id */
+    .card .title { color: #123; }
+    #hero-card .title { color: #0b71eb; font-size:1.25rem; }
+
+    /* Botones (reutilizables) */
+    .btn { display:inline-block; padding:0.45rem 0.75rem; border-radius:8px; text-decoration:none; font-weight:600; border: none; cursor:pointer; }
+    .btn.primary { background:#0b71eb; color:white; }
+    .btn.ghost { background: transparent; border:1px solid rgba(11,113,235,0.12); color:#0b71eb; }
+
+    /* Footer */
+    footer { margin-top:1.5rem; text-align:center; color:#445; padding:1rem 0; }
+
+    /* Small helper to show/hide views */
+    .view { display:none; }
+    .view.active { display:block; }
+
+    /* Demonstrar inline vs block: .inline-note uses span inside a paragraph */
+    .inline-note span { font-weight:700; background: #fffbcc; padding:0.08rem 0.24rem; border-radius:4px; }
+
+    /* Responsivo: menor padding en móviles */
+    @media (max-width:520px){ header{padding:.75rem} #main-title{font-size:1rem} }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div id="main-title">Biblioteca Kawaii — maquetado semántico</div>
+      <div style="margin-left:auto;display:flex;gap:0.6rem;">
+        <a href="#home">Inicio</a>
+        <a href="#catalog">Catálogo</a>
+        <a href="#contact">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- VISTA: HOME -->
+    <section id="home" class="view active" role="region" aria-label="Inicio">
+      <!-- Tarjeta única (id usado para elemento único: hero) -->
+      <article id="hero-card" class="card" aria-labelledby="hero-title">
+        <h1 id="hero-title" class="title">Bienvenido a la Biblioteca Kawaii</h1>
+        <p class="meta">Tarjeta destacada — ejemplo de elemento único con <code>id</code>.</p>
+        <p>Esta mini-web está organizada por <span class="em">tarjetas reutilizables</span>. Observa cómo usamos <span>elementos inline</span> como <code>&lt;span&gt;</code> para resaltar texto sin romper el flujo, mientras que las tarjetas <code>&lt;div&gt;</code>/<code>&lt;article&gt;</code> ocupan bloques completos.</p>
+        <p style="margin-top:.6rem;"><a class="btn primary" href="#catalog">Ver catálogo</a> <a class="btn ghost" href="#contact">Contacto</a></p>
+      </article>
+
+      <h2 style="margin:1rem 0 0.6rem 0;">Novedades</h2>
+      <div class="grid">
+        <!-- Tarjetas reutilizables: misma clase .card -->
+        <article class="card" aria-labelledby="t1">
+          <h3 id="t1" class="title">El Jardín Secreto</h3>
+          <div class="meta">Autor: Frances Hodgson Burnett · 1911</div>
+          <p>Una edición ilustrada perfecta para quienes buscan paz y misterio. <span class="inline-note">Lectura recomendada: <span>suave y reconfortante</span></span></p>
+        </article>
+
+        <article class="card" aria-labelledby="t2">
+          <h3 id="t2" class="title">Código y Chocolate</h3>
+          <div class="meta">Autor: A. Dev · 2024</div>
+          <p>Ensayos sobre programación y creatividad. Ideal para desarrolladores que aman la repostería.</p>
+        </article>
+
+        <article class="card" aria-labelledby="t3">
+          <h3 id="t3" class="title">Sombras en la Luna</h3>
+          <div class="meta">Autor: L. Noir · 2018</div>
+          <p>Novela corta con toques oscuros; perfecta para leer en una tarde lluviosa.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- VISTA: CATALÓG (simula otra "página") -->
+    <section id="catalog" class="view" role="region" aria-label="Catálogo">
+      <h2 style="margin-bottom:.6rem;">Catálogo — tarjetas reutilizables</h2>
+      <p style="margin-bottom:.8rem;">A continuación verás más tarjetas. Las tarjetas usan la misma clase <code>.card</code> para mantener estilo consistente.</p>
+      <div class="grid">
+        <!-- Reuso de .card -->
+        <article class="card" aria-labelledby="c1">
+          <h3 id="c1" class="title">Pequeñas Guías</h3>
+          <div class="meta">Serie breve · 2022</div>
+          <p>Guías prácticas en formato pocket.</p>
+        </article>
+        <article class="card" aria-labelledby="c2">
+          <h3 id="c2" class="title">Manual de Maquetado</h3>
+          <div class="meta">Autor: UX Team</div>
+          <p>Recopilación de patrones visuales y ejemplos semánticos.</p>
+        </article>
+        <article class="card" aria-labelledby="c3">
+          <h3 id="c3" class="title">Cuentos de Medianoche</h3>
+          <div class="meta">Autor: Varios</div>
+          <p>Antología con relatos cortos.</p>
+        </article>
+        <article class="card" aria-labelledby="c4">
+          <h3 id="c4" class="title">Diseño Accesible</h3>
+          <div class="meta">Autor: A11y Collective</div>
+          <p>Buenas prácticas para crear interfaces inclusivas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- VISTA: CONTACT -->
+    <section id="contact" class="view" role="region" aria-label="Contacto">
+      <h2>Contacto</h2>
+      <p>Usa el formulario rápido para dejar una sugerencia (este ejemplo no envía datos realmente).</p>
+
+      <form class="card" onsubmit="event.preventDefault(); alert('Formulario simulado: gracias!');" aria-label="Formulario de contacto">
+        <label for="name">Nombre (id para elemento único del input):</label>
+        <input id="name" name="name" type="text" placeholder="Tu nombre" style="display:block;margin:.4rem 0 0.8rem 0;padding:.5rem;width:100%;border-radius:8px;border:1px solid rgba(0,0,0,0.08);">
+
+        <label for="msg">Mensaje:</label>
+        <textarea id="msg" name="msg" placeholder="Escribe algo" style="display:block;margin:.4rem 0 0.8rem 0;padding:.5rem;width:100%;height:120px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);"></textarea>
+
+        <div style="display:flex;gap:.5rem;">
+          <button class="btn primary" type="submit">Enviar</button>
+          <button class="btn ghost" type="reset">Resetear</button>
+        </div>
+        <p style="margin-top:.6rem;font-size:.9rem;color:#445;">Observa que usamos <code>id</code> en inputs para asociar <code>&lt;label&gt;</code> y que el reset básico del CSS elimina márgenes por defecto.</p>
+      </form>
+
+    </section>
+
+    <footer>
+      <small>Proyecto de ejemplo — maquetado semántico. Tema: Biblioteca. README incluido en comentarios.</small>
+    </footer>
+  </main>
+
+  <script>
+    // Router simple que muestra la sección según el hash
+    function showViewFromHash() {
+      const hash = location.hash.replace('#','') || 'home';
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const el = document.getElementById(hash);
+      if (el) el.classList.add('active');
+      // sencillo manejo de foco para accesibilidad
+      if (el) {
+        const firstHeading = el.querySelector('h1, h2, h3');
+        if (firstHeading) firstHeading.setAttribute('tabindex','-1'); firstHeading.focus();
+      }
+    }
+    window.addEventListener('hashchange', showViewFromHash);
+    window.addEventListener('load', showViewFromHash);
+  </script>
+</body>
+</html>
